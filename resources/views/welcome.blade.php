@@ -79,11 +79,6 @@
 
             <div class="content">
                 <div class="title m-b-md">
-<?php
-Route::get('/', function()
-{
-    return 'coucou';
-}); </?>
                 </div>
 
                 <div class="links">

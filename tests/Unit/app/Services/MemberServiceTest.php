@@ -9,6 +9,14 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 class MemberServiceTest extends TestCase
 {
     /**
+     * @var \Mockery\MockInterface
+     */
+    private $emailMocked;
+
+
+
+
+    /**
      * Doit ajouter un nouvel email en base de donnée
      * Doit aussi vérifier qu'un email est en cours d'envoi dans le gestionnaire de queue
      *
@@ -20,12 +28,12 @@ class MemberServiceTest extends TestCase
         $email = 'First email';
 
         // Assert
-        $this->emailMocked->shouldReceive('where')
+       /* $this->emailMocked->shouldReceive('where')
             ->once()
             ->with([
                 Email::EMAIL => $email
             ])
-            ->andReturn($this->taskMocked);
+            ->andReturn($this->emailMocked);*/
 
         $this->emailMocked->shouldReceive('first')
             ->once()
@@ -60,30 +68,30 @@ class MemberServiceTest extends TestCase
     public function testEmailAlreadyExistException()
     {
         // Arrange
-        $task = 'First task';
+        $email = 'First email';
 
-        // SELECT name FROM tasks WHERE name = 'First task' LIMIT 1;
-        $this->taskMocked->shouldReceive('where')
+
+        $this->emailMocked->shouldReceive('where')
             ->once()
             ->with([
-                Task::NAME => $task
+                Email::EMAIL => $email
             ])
-            ->andReturn($this->taskMocked);
+            ->andReturn($this->emailMocked);
 
-        $this->taskMocked->shouldReceive('first')
+        $this->emailMocked->shouldReceive('first')
             ->once()
-            ->andReturn(new Task());
+            ->andReturn(new Email());
 
-        $this->taskMocked->shouldReceive('create')
+        $this->emailMocked->shouldReceive('create')
             ->times(0);
 
-        $taskService = new TaskService($this->taskMocked);
+        $emailService = new EmailService($this->emailMocked);
 
         // Assert
-        $this->expectException(TaskAlreadyExistException::class);
+        $this->expectException(EmailAlreadyExistException::class);
 
         // Act
-        $taskService->create($task);
+        $emailService->create($email);
     }
 
 }

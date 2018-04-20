@@ -26,7 +26,7 @@ class MemberService
 
     public function create(string email)
     {
-        $result = $this->member->where([
+        $result = $this->member->email([
             Member::EMAIL => $email
         ])->first();
 

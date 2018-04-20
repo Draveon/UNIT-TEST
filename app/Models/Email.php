@@ -1,7 +1,18 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Quentin
- * Date: 20/04/2018
- * Time: 14:14
- */
+namespace App\Models;
+
+use Illuminate\Foundation\Auth\User as Authenticatable;
+
+class Member extends Authenticatable
+{
+    public const EMAIL = 'email';
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'email'
+    ];
+}
